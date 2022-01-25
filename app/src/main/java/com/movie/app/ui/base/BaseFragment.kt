@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.movie.app.common.showFragment
 import com.movie.app.routing.AppFragmentNavigator
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -45,5 +46,9 @@ abstract class BaseFragment : Fragment(), KodeinAware {
   
   open fun hideLoading(progressBar: ProgressBar) {
     (activity as BaseActivity).hideLoading(progressBar)
+  }
+
+  fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false) {
+    activity?.showFragment(fragment, containerId, addToBackStack)
   }
 }

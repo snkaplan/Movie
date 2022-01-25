@@ -34,29 +34,13 @@ private val clickListener: (Movie, Int) -> Unit,
         fun bind(upcomingMovie: Movie, clickListener: (Movie, Int) -> Unit) {
             itemBinding.upcomingMovieOverviewTv.text = upcomingMovie.overview
             itemBinding.upcomingMovieTitleTv.text = upcomingMovie.title
-            itemBinding.upcomingReleaseDate.text = upcomingMovie.releaseDate.toString()
+            itemBinding.upcomingReleaseDate.text = upcomingMovie.releaseDate
             itemBinding.upcomingMovieRvItem.setOnClickListener {
                 clickListener(upcomingMovie, adapterPosition)
             }
             Glide.with(view)
                 .load("https://image.tmdb.org/t/p/w185/${upcomingMovie.posterPath}")
                 .into(itemBinding.upcomingMovieImage)
-/*            val cal: Calendar =
-                Calendar.getInstance().apply { timeInMillis = daily.timestamp * 1000 }
-            val dayOfWeek = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US)
-            val dayOfMonth = cal[Calendar.DAY_OF_MONTH]
-            Glide.with(view)
-                .load("http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png")
-                .into(itemBinding.tempImg)
-            itemBinding.dayTv.text = "$dayOfWeek, $dayOfMonth"
-            itemBinding.tempCurrent.text = "${daily.temperature.day}°"
-            itemBinding.tempMin.text = "${daily.temperature.min}°"
-            itemBinding.tempMax.text = "${daily.temperature.max}°"
-            itemBinding.tempIdentifierTv.text = daily.weather[0].description.uppercase()
-            */
-            // itemBinding.myTextView.text = hourly.name
-
-//            SimpleDateFormat("MM-dd/HH:mm").format(Date(hourly.timestamp * 1000))
         }
     }
 }

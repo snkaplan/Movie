@@ -3,25 +3,20 @@ package com.movie.app.ui.upcoming
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.movie.app.R
+import com.movie.app.common.MOVIE_ID
 import com.movie.app.common.subscribe
-import com.movie.app.databinding.NowPlayingFragmentBinding
 import com.movie.app.databinding.UpcomingFragmentBinding
 import com.movie.app.ui.base.*
-import com.movie.app.ui.nowplaying.NowPlayingViewModel
-import com.movie.app.ui.nowplaying.NowPlayingViewModelFactory
 import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 import org.kodein.di.generic.instance
-import java.util.*
 
 class UpcomingFragment : BaseFragment() {
     private val viewModelFactory: UpcomingViewModelFactory by instance()
@@ -70,6 +65,7 @@ class UpcomingFragment : BaseFragment() {
     }
 
     private fun movieItemClicked(selectedMovie: Movie, pos: Int) {
-        Log.d("TAG", "movieItemClicked: " + selectedMovie.title)
+        val bundle = bundleOf(MOVIE_ID to selectedMovie.id)
+        findNavController().navigate(R.id.action_main_to_detail, bundle)
     }
 }

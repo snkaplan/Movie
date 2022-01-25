@@ -1,4 +1,4 @@
-package com.movie.data.network.response.nowplaying
+package com.movie.data.network.response.movies
 
 
 import com.google.gson.annotations.SerializedName
@@ -9,7 +9,7 @@ import com.movie.data.network.response.common.Result
 import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 
-data class NowPlayingResponse(
+data class MoviesResponse(
     override val dates: Dates,
     override val page: Int,
     override val results: List<Result>,
@@ -21,10 +21,11 @@ data class NowPlayingResponse(
     override fun mapToDomainModel(): MovieResult {
         val movies = arrayListOf<Movie>()
         for (result in results) {
-            movies.add(Movie(result.title,
+            movies.add(Movie(result.id, result.title,
                 result.releaseDate,
                 result.overview,
-                result.posterPath))
+                result.posterPath,
+                result.voteAverage))
         }
         return MovieResult(page, totalPages, totalResults, movies)
     }

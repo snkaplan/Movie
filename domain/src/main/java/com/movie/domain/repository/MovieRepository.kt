@@ -1,5 +1,6 @@
 package com.movie.domain.repository
 
+import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 import com.movie.domain.model.Result
 
