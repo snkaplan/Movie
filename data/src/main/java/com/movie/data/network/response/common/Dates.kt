@@ -1,4 +1,4 @@
-package com.movie.data.network.response
+package com.movie.data.network.response.common
 
 
 import com.google.gson.annotations.SerializedName

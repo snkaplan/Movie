@@ -1,18 +1,18 @@
-package com.movie.app.ui.nowplaying
+package com.movie.app.ui.upcoming
 
 import com.movie.app.ui.base.BaseViewModel
+import com.movie.app.ui.base.Error
 import com.movie.app.ui.base.Success
-import com.movie.domain.usecase.MovieUseCase
 import com.movie.domain.model.MovieResult
 import com.movie.domain.model.onFailure
 import com.movie.domain.model.onSuccess
-import com.movie.app.ui.base.Error
+import com.movie.domain.usecase.MovieUseCase
 
-class NowPlayingViewModel(private val movieUseCase: MovieUseCase) :
-    BaseViewModel<MovieResult>() {
+class UpcomingViewModel(private val movieUseCase: MovieUseCase) : BaseViewModel<MovieResult>() {
     private var currentPage = 1
-    fun getNowPlayingMovies() = executeUseCase {
-        movieUseCase.getNowPlayingMoviesUseCase(currentPage)
+
+    fun getUpcomingMovies() = executeUseCase {
+        movieUseCase.getUpcomingMoviesUseCase(currentPage)
             .onSuccess {
                 _viewState.value = Success(it)
                 currentPage++

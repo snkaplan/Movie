@@ -17,6 +17,7 @@ abstract class BaseRepository<T : Any, R : DomainMapper<T>>(
 ) {
     /**
      * Use this if you need to cache data after fetching it from the api, or retrieve something from cache
+     * There is no DB in this application only Network access! Could be use later.
      */
     protected suspend fun fetchData(
         apiDataProvider: suspend () -> Result<T>,

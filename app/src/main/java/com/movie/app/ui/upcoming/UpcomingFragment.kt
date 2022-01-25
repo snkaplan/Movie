@@ -1,35 +1,39 @@
-package com.movie.app.ui.nowplaying
+package com.movie.app.ui.upcoming
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.movie.app.R
 import com.movie.app.common.subscribe
 import com.movie.app.databinding.NowPlayingFragmentBinding
+import com.movie.app.databinding.UpcomingFragmentBinding
 import com.movie.app.ui.base.*
+import com.movie.app.ui.nowplaying.NowPlayingViewModel
+import com.movie.app.ui.nowplaying.NowPlayingViewModelFactory
 import com.movie.domain.model.MovieResult
 import org.kodein.di.generic.instance
 
-class NowPlayingFragment : BaseFragment() {
-    private val viewModelFactory: NowPlayingViewModelFactory by instance()
-    private lateinit var binding: NowPlayingFragmentBinding
-    private lateinit var viewModel: NowPlayingViewModel
+class UpcomingFragment : BaseFragment() {
+    private val viewModelFactory: UpcomingViewModelFactory by instance()
+    private lateinit var binding: UpcomingFragmentBinding
+    private lateinit var viewModel: UpcomingViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = NowPlayingFragmentBinding.inflate(inflater, container, false)
+        binding = UpcomingFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun viewReady() {
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[NowPlayingViewModel::class.java]
-        viewModel.getNowPlayingMovies()
+            ViewModelProvider(this, viewModelFactory)[UpcomingViewModel::class.java]
+        viewModel.getUpcomingMovies()
         subscribeToData()
     }
 
