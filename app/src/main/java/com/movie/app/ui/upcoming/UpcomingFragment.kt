@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.movie.app.R
 import com.movie.app.common.subscribe
 import com.movie.app.databinding.NowPlayingFragmentBinding
@@ -14,8 +18,10 @@ import com.movie.app.databinding.UpcomingFragmentBinding
 import com.movie.app.ui.base.*
 import com.movie.app.ui.nowplaying.NowPlayingViewModel
 import com.movie.app.ui.nowplaying.NowPlayingViewModelFactory
+import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 import org.kodein.di.generic.instance
+import java.util.*
 
 class UpcomingFragment : BaseFragment() {
     private val viewModelFactory: UpcomingViewModelFactory by instance()
@@ -46,9 +52,24 @@ class UpcomingFragment : BaseFragment() {
     private fun handleViewState(viewState: ViewState<MovieResult>) {
         when (viewState) {
             is Loading -> Log.d("TAG", "Loading")
-            is Success -> Log.d("TAG", "Success " + viewState.data)
+            is Success -> {
+                Log.d("TAG", "Success " + viewState.data)
+                binding.upcomingMovieRv.apply {
+                    layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                    setItemViewCacheSize(30)
+                    adapter =
+                        UpcomingRecyclerViewAdapter(viewState.data.movies) { selectedMovie: Movie, pos: Int ->
+                            movieItemClicked(selectedMovie,
+                                pos)
+                        }
+                }
+            }
             is Error -> Log.d("TAG", "handleViewState error: " + viewState.error.localizedMessage)
             is NoInternetState -> Log.d("TAG", "handleViewState: " + "showNoInternetError()")
         }
+    }
+
+    private fun movieItemClicked(selectedMovie: Movie, pos: Int) {
+        Log.d("TAG", "movieItemClicked: " + selectedMovie.title)
     }
 }

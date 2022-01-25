@@ -21,6 +21,5 @@ class MovieApp : Application(), KodeinAware {
         import(appModule)
         import(presentationModule)
         import(interactionModule)
-
     }
 }

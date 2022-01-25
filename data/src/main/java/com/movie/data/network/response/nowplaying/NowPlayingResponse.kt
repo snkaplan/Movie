@@ -8,7 +8,6 @@ import com.movie.data.network.response.common.MovieResponse
 import com.movie.data.network.response.common.Result
 import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
-import java.util.*
 
 data class NowPlayingResponse(
     override val dates: Dates,
@@ -23,10 +22,9 @@ data class NowPlayingResponse(
         val movies = arrayListOf<Movie>()
         for (result in results) {
             movies.add(Movie(result.title,
-                Date(),
+                result.releaseDate,
                 result.overview,
-                result.posterPath,
-                result.backdropPath))
+                result.posterPath))
         }
         return MovieResult(page, totalPages, totalResults, movies)
     }

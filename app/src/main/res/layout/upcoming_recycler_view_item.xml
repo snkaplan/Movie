@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/upcoming_rv_item_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upcoming_movie_rv_item"
+    android:layout_margin="@dimen/upcoming_rv_item_margin">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/upcoming_rv_image_size" />
+
+    <ImageView
+        android:id="@+id/upcoming_movie_image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/movie_image"/>
+
+    <TextView
+        android:id="@+id/upcoming_movie_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/upcoming_rv_title_height"
+        android:layout_marginStart="@dimen/upcoming_rv_title_margin"
+        android:layout_marginTop="@dimen/upcoming_rv_title_margin"
+        tools:text="Title!"
+        android:textSize="@dimen/large_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline1"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/upcoming_movie_overview_tv"
+        android:layout_width="@dimen/upcoming_rv_title_width"
+        android:layout_height="@dimen/upcoming_rv_overview_height"
+        android:layout_marginStart="@dimen/upcoming_rv_title_margin"
+        android:layout_marginTop="@dimen/upcoming_rv_title_margin"
+        android:textSize="@dimen/medium_text_size"
+        android:textColor="@color/gray"
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Overview..."
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/upcoming_movie_title_tv"/>
+
+    <TextView
+        android:id="@+id/upcoming_release_date"
+        android:layout_width="@dimen/upcoming_rv_release_date_width"
+        android:layout_height="@dimen/upcoming_rv_release_date_height"
+        android:layout_marginEnd="@dimen/upcoming_rv_release_date_margin_end"
+        android:layout_marginTop="@dimen/upcoming_rv_release_date_margin_top"
+        android:textSize="@dimen/small_text_size"
+        android:textColor="@color/gray"
+        tools:text="ReleaseDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upcoming_movie_overview_tv"/>
+
+    <ImageView
+        android:layout_width="@dimen/upcoming_rv_right_arrow_width"
+        android:layout_height="@dimen/upcoming_rv_right_arrow_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginVertical="@dimen/upcoming_rv_right_arrow_margin_vertical"
+        android:layout_marginEnd="@dimen/upcoming_rv_right_arrow_margin_end"
+        android:contentDescription="@string/movie_image"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
