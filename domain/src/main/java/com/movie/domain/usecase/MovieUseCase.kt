@@ -1,6 +1,5 @@
 package com.movie.domain.usecase
 
-import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 import com.movie.domain.model.Result
 

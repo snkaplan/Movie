@@ -5,5 +5,4 @@ data class MovieResult(
     val totalPages: Int,
     val totalResults: Int,
     val movies: List<Movie>,
-) {
-}
+)

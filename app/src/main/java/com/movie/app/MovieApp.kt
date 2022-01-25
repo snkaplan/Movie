@@ -1,7 +1,6 @@
 package com.movie.app
 
 import android.app.Application
-import com.movie.app.di.appModule
 import com.movie.app.di.presentationModule
 import com.movie.data.di.databaseModule
 import com.movie.data.di.networkModule
@@ -18,7 +17,6 @@ class MovieApp : Application(), KodeinAware {
         import(repositoryModule)
         import(databaseModule)
         import(networkModule)
-        import(appModule)
         import(presentationModule)
         import(interactionModule)
     }

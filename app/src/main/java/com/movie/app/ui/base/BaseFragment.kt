@@ -8,15 +8,12 @@ import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.movie.app.common.showFragment
-import com.movie.app.routing.AppFragmentNavigator
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
-import org.kodein.di.generic.instance
 
 abstract class BaseFragment : Fragment(), KodeinAware {
   override val kodein by closestKodein()
-  protected val appFragmentNavigator: AppFragmentNavigator by instance()
-  
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(getLayout(), container, false)
   }

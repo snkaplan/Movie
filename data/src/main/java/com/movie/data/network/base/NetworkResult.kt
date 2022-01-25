@@ -23,7 +23,7 @@ inline fun <T : Any> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
 }
 
 inline fun <T : Any> Response<T>.onFailure(action: (HttpError) -> Unit) {
-    if (!isSuccessful) errorBody()?.run { action(HttpError(Throwable(message()), code())) }
+    if (!isSuccessful) errorBody()?.run { action(HttpError(Throwable(message()))) }
 }
 
 /**
