@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.movie.app.common.TMDB_IMAGE_BASE_URL
 import com.movie.app.databinding.NowPlayingRecyclerViewItemBinding
 import com.movie.app.databinding.UpcomingRecyclerViewItemBinding
 import com.movie.domain.model.Movie
@@ -48,7 +49,7 @@ class NowPlayingRecyclerViewAdapter(
             }
             nowPlayingMovie.posterPath?.let {
                 Glide.with(view)
-                    .load("https://image.tmdb.org/t/p/w185/${it}")
+                    .load("${TMDB_IMAGE_BASE_URL}${it}")
                     .into(itemBinding.posterIv)
             }
         }

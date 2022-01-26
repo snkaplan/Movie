@@ -25,7 +25,8 @@ data class MoviesResponse(
                 result.releaseDate,
                 result.overview,
                 result.posterPath,
-                result.voteAverage))
+                result.voteAverage,
+                null))
         }
         return MovieResult(page, totalPages, totalResults, movies)
     }

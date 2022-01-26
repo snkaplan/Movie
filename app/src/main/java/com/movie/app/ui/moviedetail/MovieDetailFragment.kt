@@ -14,11 +14,17 @@ import com.movie.app.databinding.MovieDetailFragmentBinding
 import com.movie.app.ui.base.*
 import com.movie.domain.model.Movie
 import org.kodein.di.generic.instance
+import android.content.Intent
+import android.net.Uri
+import com.movie.app.common.IMDB_REDIRECT_BASE_URL
+import com.movie.app.common.TMDB_IMAGE_BASE_URL
+
 
 class MovieDetailFragment : BaseFragment() {
     private val viewModelFactory: MovieDetailViewModelFactory by instance()
     private lateinit var binding: MovieDetailFragmentBinding
     private lateinit var viewModel: MovieDetailViewModel
+    private var currentMovie: Movie? = null
     private var movieId: Int = 1
 
     override fun onCreateView(
@@ -34,6 +40,17 @@ class MovieDetailFragment : BaseFragment() {
         viewModel =
             ViewModelProvider(this, viewModelFactory)[MovieDetailViewModel::class.java]
         viewModel.getMovieDetail(movieId)
+        binding.imdbLogoIv.setOnClickListener{
+            currentMovie?.let {
+                it.imdbId?.let { id ->
+                    val viewIntent = Intent("android.intent.action.VIEW",
+                        Uri.parse("${IMDB_REDIRECT_BASE_URL}${id}"))
+                    startActivity(viewIntent)
+                }
+
+            }
+
+        }
         subscribeToData()
     }
 
@@ -50,17 +67,21 @@ class MovieDetailFragment : BaseFragment() {
                 binding.detailLoadingProgressBar.visibility = View.VISIBLE
             }
             is Success -> {
-                binding.groupLoading.visibility = View.VISIBLE
-                binding.detailLoadingProgressBar.visibility = View.GONE
-                binding.titleTv.text = viewState.data.title
-                binding.overviewTv.text = viewState.data.overview
-                binding.releaseDateTv.text = viewState.data.releaseDate
-                binding.voteTv.text = viewState.data.voteAverage.toString()
-                viewState.data.posterPath?.let {
-                    Glide.with(requireView())
-                        .load("https://image.tmdb.org/t/p/w185/${it}")
-                        .into(binding.movieDetailIv)
+                currentMovie = viewState.data
+                currentMovie?.let {
+                    binding.groupLoading.visibility = View.VISIBLE
+                    binding.detailLoadingProgressBar.visibility = View.GONE
+                    binding.titleTv.text = it.title
+                    binding.overviewTv.text = it.overview
+                    binding.releaseDateTv.text = it.releaseDate
+                    binding.voteTv.text = it.voteAverage.toString()
+                    viewState.data.posterPath?.let { posterPath ->
+                        Glide.with(requireView())
+                            .load("${TMDB_IMAGE_BASE_URL}${posterPath}")
+                            .into(binding.movieDetailIv)
+                    }
                 }
+
             }
             is Error -> {
                 binding.detailLoadingProgressBar.visibility = View.GONE

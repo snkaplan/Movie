@@ -29,7 +29,6 @@ class MovieRepositoryImpl(
 
     override suspend fun getNowPlayingMovies(page: Int): Result<MovieResult> {
         return if(!this::_nowPlayingMovies.isInitialized){
-            Log.d("TAG", "getNowPlayingMovies: here")
             val fetchData = fetchData(
                 dataProvider = { movieApi.getNowPlayingMovies(page).getData() }
             )
@@ -42,7 +41,6 @@ class MovieRepositoryImpl(
 
     override suspend fun getUpcomingMovies(page: Int): Result<MovieResult> {
         return if(!this::_upcomingMovies.isInitialized){
-            Log.d("TAG", "getUpcomingMovies: here")
             val fetchData = fetchData(
                 dataProvider = { movieApi.getUpcomingMovies(page).getData() }
             )

@@ -27,7 +27,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        NavigationUI.navigateUp(navController, null)
+        val id = navController.currentDestination?.id
+        if(id != R.id.main_fragment){
+            NavigationUI.navigateUp(navController, null)
+        } else {
+            finish()
+        }
         super.onBackPressed()
     }
 }

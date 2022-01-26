@@ -16,7 +16,7 @@ data class MovieDetailResponse(
     val homepage: String,
     val id: Int,
     @SerializedName("imdb_id")
-    val imdbId: String,
+    val imdbId: String?,
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("original_title")
@@ -45,6 +45,6 @@ data class MovieDetailResponse(
     val voteCount: Int,
 ) : DomainMapper<Movie> {
     override fun mapToDomainModel(): Movie {
-        return Movie(id, title, releaseDate, overview, posterPath, voteAverage)
+        return Movie(id, title, releaseDate, overview, posterPath, voteAverage, imdbId)
     }
 }
