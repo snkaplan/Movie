@@ -9,10 +9,10 @@ import retrofit2.http.Query
 
 interface MovieApi {
     @GET("now_playing")
-    suspend fun getNowPlayingMovies(@Query("page") page: Int): Response<MoviesResponse>
+    suspend fun getNowPlayingMovies(@Query("page") page: Int, @Query("region") region: String = "US|TR|EN|CA|IT|GR|FR"): Response<MoviesResponse>
 
     @GET("upcoming")
-    suspend fun getUpcomingMovies(@Query("page") page: Int): Response<MoviesResponse>
+    suspend fun getUpcomingMovies(@Query("page") page: Int, @Query("region") region: String = "US|TR|EN|CA|IT|GR|FR"): Response<MoviesResponse>
 
     @GET("{movie-id}")
     suspend fun getMovieDetail(@Path("movie-id") page: Int): Response<MovieDetailResponse>
