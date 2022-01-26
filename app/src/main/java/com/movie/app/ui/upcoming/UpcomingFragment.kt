@@ -52,7 +52,7 @@ class UpcomingFragment : BaseFragment() {
 
     private fun handleUI() {
         rvAdapter =
-            UpcomingRecyclerViewAdapter(arrayListOf<Movie>()) { selectedMovie: Movie, pos: Int ->
+            UpcomingRecyclerViewAdapter(arrayListOf()) { selectedMovie: Movie, pos: Int ->
                 movieItemClicked(selectedMovie,
                     pos)
             }
@@ -79,13 +79,14 @@ class UpcomingFragment : BaseFragment() {
                 binding.upcomingLoadingProgressBar.visibility = View.VISIBLE
             }
             is Success -> {
+                val itemCount = rvAdapter.itemCount
                 rvAdapter.reloadList(viewState.data.movies)
-                rvAdapter.notifyItemInserted(rvAdapter.itemCount - 1)
+                rvAdapter.notifyItemRangeChanged(itemCount, rvAdapter.itemCount)
                 binding.upcomingLoadingProgressBar.visibility = View.GONE
             }
             is Error -> {
                 binding.upcomingLoadingProgressBar.visibility = View.GONE
-                snackbar("Error happened while fetching upcoming movies please try later.",
+                snackbar(viewState.error.localizedMessage ?: "Error happened while fetching movies",
                     requireView())
             }
             is NoInternetState -> {

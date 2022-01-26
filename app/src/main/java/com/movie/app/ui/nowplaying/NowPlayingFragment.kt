@@ -44,7 +44,7 @@ class NowPlayingFragment : BaseFragment() {
 
     private fun handleUI() {
         rvAdapter =
-            NowPlayingRecyclerViewAdapter(arrayListOf<Movie>()) { selectedMovie: Movie, pos: Int ->
+            NowPlayingRecyclerViewAdapter(arrayListOf()) { selectedMovie: Movie, pos: Int ->
                 movieItemClicked(selectedMovie,
                     pos)
             }
@@ -75,17 +75,20 @@ class NowPlayingFragment : BaseFragment() {
                 binding.nowPlayingLoadingProgressBar.visibility = View.VISIBLE
             }
             is Success -> {
+                val itemCount = rvAdapter.itemCount
                 binding.nowPlayingLoadingProgressBar.visibility = View.GONE
                 rvAdapter.reloadList(viewState.data.movies)
-                rvAdapter.notifyItemInserted(rvAdapter.itemCount - 1)
+                rvAdapter.notifyItemRangeChanged(itemCount, rvAdapter.itemCount)
             }
             is Error -> {
                 binding.nowPlayingLoadingProgressBar.visibility = View.GONE
-                snackbar("Error happened while fetching now playing movies please try later.", requireView())
+                snackbar(viewState.error.localizedMessage ?: "Error happened while fetching movies",
+                    requireView())
             }
             is NoInternetState -> {
                 binding.nowPlayingLoadingProgressBar.visibility = View.GONE
-                snackbar("There is no internet connection. Please make sure to you are connected to internet", requireView())
+                snackbar("There is no internet connection. Please make sure to you are connected to internet",
+                    requireView())
             }
         }
     }

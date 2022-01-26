@@ -16,12 +16,8 @@ abstract class BaseActivity : AppCompatActivity() {
   fun showLoading(progressBar: ProgressBar) = progressBar.visible()
   
   fun hideLoading(progressBar: ProgressBar) = progressBar.gone()
-  
-  fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false) {
-    showFragment(fragment, containerId, addToBackStack)
-  }
-  
-  override fun onBackPressed() {
+
+    override fun onBackPressed() {
     if (supportFragmentManager.backStackEntryCount <= 1) finish() else goBack()
   }
 }

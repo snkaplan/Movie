@@ -1,15 +1,11 @@
 package com.movie.app.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.movie.app.ui.base.BaseActivity
-
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.movie.app.R
+import com.movie.app.ui.base.BaseActivity
 
 
 class MainActivity : BaseActivity() {

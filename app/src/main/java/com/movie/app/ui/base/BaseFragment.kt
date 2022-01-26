@@ -22,30 +22,12 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     super.onViewCreated(view, savedInstanceState)
     viewReady()
   }
-  
-  protected fun onBackPressed() = (activity as BaseActivity).onBackPressed()
-  
-  abstract fun viewReady()
+
+    abstract fun viewReady()
   
   abstract fun getLayout(): Int
-  
-  open fun showError(@StringRes errorMessage: Int, rootView: View) {
-    (activity as BaseActivity).showError(errorMessage, rootView)
-  }
-  
-  open fun showError(errorMessage: String?, rootView: View) {
-    (activity as BaseActivity).showError(errorMessage, rootView)
-  }
-  
-  open fun showLoading(progressBar: ProgressBar) {
-    (activity as BaseActivity).showLoading(progressBar)
-  }
-  
-  open fun hideLoading(progressBar: ProgressBar) {
-    (activity as BaseActivity).hideLoading(progressBar)
-  }
 
-  fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false) {
+    fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false) {
     activity?.showFragment(fragment, containerId, addToBackStack)
   }
 }

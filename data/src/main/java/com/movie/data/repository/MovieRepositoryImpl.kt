@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.movie.data.common.coroutine.CoroutineContextProvider
 import com.movie.data.common.utils.Connectivity
+import com.movie.data.network.GENERAL_NETWORK_ERROR
+import com.movie.data.network.MAX_PAGE_ERROR
 import com.movie.data.network.MovieApi
 import com.movie.data.network.base.getData
 import com.movie.data.network.response.movies.MoviesResponse
-import com.movie.domain.model.Movie
-import com.movie.domain.model.MovieResult
-import com.movie.domain.model.Result
+import com.movie.domain.model.*
 import com.movie.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
@@ -52,14 +52,22 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun refreshNowPlayingMovies(page: Int): Result<MovieResult> {
-        return fetchData(
-            dataProvider = { movieApi.getUpcomingMovies(page).getData() }
-        )
+        return if(page <= (nowPlayingMovies as Success<MovieResult>).data.totalPages){
+            fetchData(
+                dataProvider = { movieApi.getNowPlayingMovies(page).getData() }
+            )
+        } else {
+            Failure(HttpError(Throwable(MAX_PAGE_ERROR)))
+        }
     }
 
     override suspend fun refreshUpcomingMovies(page: Int): Result<MovieResult> {
-        return fetchData(
-            dataProvider = { movieApi.getUpcomingMovies(page).getData() }
-        )
+        return if(page <= (upcomingMovies as Success<MovieResult>).data.totalPages){
+            fetchData(
+                dataProvider = { movieApi.getUpcomingMovies(page).getData() }
+            )
+        } else {
+            Failure(HttpError(Throwable(MAX_PAGE_ERROR)))
+        }
     }
 }
