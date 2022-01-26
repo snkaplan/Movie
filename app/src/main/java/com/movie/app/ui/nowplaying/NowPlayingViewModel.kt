@@ -15,7 +15,15 @@ class NowPlayingViewModel(private val movieUseCase: MovieUseCase) :
         movieUseCase.getNowPlayingMoviesUseCase(currentPage)
             .onSuccess {
                 _viewState.value = Success(it)
-                currentPage++
+            }
+            .onFailure { _viewState.value = Error(it.throwable) }
+    }
+
+    fun fetchMoreNowPlayingMovies() = executeUseCase {
+        currentPage++
+        movieUseCase.getNowPlayingMoviesUseCase(currentPage)
+            .onSuccess {
+                _viewState.value = Success(it)
             }
             .onFailure { _viewState.value = Error(it.throwable) }
     }

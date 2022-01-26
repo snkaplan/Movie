@@ -26,11 +26,13 @@
 
     <TextView
         android:id="@+id/upcoming_movie_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/upcoming_rv_title_width"
         android:layout_height="@dimen/upcoming_rv_title_height"
         android:layout_marginStart="@dimen/upcoming_rv_title_margin"
         android:layout_marginTop="@dimen/upcoming_rv_title_margin"
         tools:text="Title!"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="@dimen/large_text_size"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -53,7 +55,7 @@
 
     <TextView
         android:id="@+id/upcoming_release_date"
-        android:layout_width="@dimen/upcoming_rv_release_date_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/upcoming_rv_release_date_height"
         android:layout_marginEnd="@dimen/upcoming_rv_release_date_margin_end"
         android:layout_marginTop="@dimen/upcoming_rv_release_date_margin_top"
@@ -72,6 +74,7 @@
         android:layout_marginEnd="@dimen/upcoming_rv_right_arrow_margin_end"
         android:contentDescription="@string/movie_image"
         android:src="@drawable/ic_baseline_arrow_forward_ios_24"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

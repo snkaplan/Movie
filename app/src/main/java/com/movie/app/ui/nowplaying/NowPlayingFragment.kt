@@ -6,10 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.movie.app.R
+import com.movie.app.common.MOVIE_ID
+import com.movie.app.common.snackbar
 import com.movie.app.common.subscribe
 import com.movie.app.databinding.NowPlayingFragmentBinding
 import com.movie.app.ui.base.*
+import com.movie.app.ui.upcoming.UpcomingRecyclerViewAdapter
+import com.movie.domain.model.Movie
 import com.movie.domain.model.MovieResult
 import org.kodein.di.generic.instance
 
@@ -17,6 +24,7 @@ class NowPlayingFragment : BaseFragment() {
     private val viewModelFactory: NowPlayingViewModelFactory by instance()
     private lateinit var binding: NowPlayingFragmentBinding
     private lateinit var viewModel: NowPlayingViewModel
+    private lateinit var rvAdapter: NowPlayingRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +35,32 @@ class NowPlayingFragment : BaseFragment() {
     }
 
     override fun viewReady() {
+        handleUI()
         viewModel =
             ViewModelProvider(this, viewModelFactory)[NowPlayingViewModel::class.java]
         viewModel.getNowPlayingMovies()
         subscribeToData()
+    }
+
+    private fun handleUI() {
+        rvAdapter =
+            NowPlayingRecyclerViewAdapter(arrayListOf<Movie>()) { selectedMovie: Movie, pos: Int ->
+                movieItemClicked(selectedMovie,
+                    pos)
+            }
+        binding.nowPlayingMovieRv.apply {
+            setItemViewCacheSize(30)
+            adapter = rvAdapter
+        }
+
+        binding.nowPlayingMovieRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollHorizontally(1)) {
+                    viewModel.fetchMoreNowPlayingMovies()
+                }
+            }
+        })
     }
 
     override fun getLayout() = R.layout.now_playing_fragment
@@ -41,10 +71,27 @@ class NowPlayingFragment : BaseFragment() {
 
     private fun handleViewState(viewState: ViewState<MovieResult>) {
         when (viewState) {
-            is Loading -> Log.d("TAG", "Loading")
-            is Success -> Log.d("TAG", "Success " + viewState.data)
-            is Error -> Log.d("TAG", "handleViewState error: " + viewState.error.localizedMessage)
-            is NoInternetState -> Log.d("TAG", "handleViewState: " + "showNoInternetError()")
+            is Loading -> {
+                binding.nowPlayingLoadingProgressBar.visibility = View.VISIBLE
+            }
+            is Success -> {
+                binding.nowPlayingLoadingProgressBar.visibility = View.GONE
+                rvAdapter.reloadList(viewState.data.movies)
+                rvAdapter.notifyItemInserted(rvAdapter.itemCount - 1)
+            }
+            is Error -> {
+                binding.nowPlayingLoadingProgressBar.visibility = View.GONE
+                snackbar("Error happened while fetching now playing movies please try later.", requireView())
+            }
+            is NoInternetState -> {
+                binding.nowPlayingLoadingProgressBar.visibility = View.GONE
+                snackbar("There is no internet connection. Please make sure to you are connected to internet", requireView())
+            }
         }
+    }
+
+    private fun movieItemClicked(selectedMovie: Movie, pos: Int) {
+        val bundle = bundleOf(MOVIE_ID to selectedMovie.id)
+        findNavController().navigate(R.id.action_main_to_detail, bundle)
     }
 }

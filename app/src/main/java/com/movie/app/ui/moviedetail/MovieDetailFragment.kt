@@ -45,18 +45,31 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun handleViewState(viewState: ViewState<Movie>) {
         when (viewState) {
-            is Loading -> Log.d("TAG", "Loading")
+            is Loading -> {
+                binding.groupLoading.visibility = View.GONE
+                binding.detailLoadingProgressBar.visibility = View.VISIBLE
+            }
             is Success -> {
+                binding.groupLoading.visibility = View.VISIBLE
+                binding.detailLoadingProgressBar.visibility = View.GONE
                 binding.titleTv.text = viewState.data.title
                 binding.overviewTv.text = viewState.data.overview
                 binding.releaseDateTv.text = viewState.data.releaseDate
                 binding.voteTv.text = viewState.data.voteAverage.toString()
-                Glide.with(requireView())
-                    .load("https://image.tmdb.org/t/p/w185/${viewState.data.posterPath}")
-                    .into(binding.movieDetailIv)
+                viewState.data.posterPath?.let {
+                    Glide.with(requireView())
+                        .load("https://image.tmdb.org/t/p/w185/${it}")
+                        .into(binding.movieDetailIv)
+                }
             }
-            is Error -> Log.d("TAG", "handleViewState error: " + viewState.error.localizedMessage)
-            is NoInternetState -> Log.d("TAG", "handleViewState: " + "showNoInternetError()")
+            is Error -> {
+                binding.detailLoadingProgressBar.visibility = View.GONE
+                Log.d("TAG", "handleViewState error: " + viewState.error.localizedMessage)
+            }
+            is NoInternetState -> {
+                binding.detailLoadingProgressBar.visibility = View.GONE
+                Log.d("TAG", "handleViewState: " + "showNoInternetError()")
+            }
         }
     }
 }

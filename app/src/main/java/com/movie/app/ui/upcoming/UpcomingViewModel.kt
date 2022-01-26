@@ -15,7 +15,15 @@ class UpcomingViewModel(private val movieUseCase: MovieUseCase) : BaseViewModel<
         movieUseCase.getUpcomingMoviesUseCase(currentPage)
             .onSuccess {
                 _viewState.value = Success(it)
-                currentPage++
+            }
+            .onFailure { _viewState.value = Error(it.throwable) }
+    }
+
+    fun fetchMoreUpcomingMovies() = executeUseCase {
+        currentPage++
+        movieUseCase.getUpcomingMoviesUseCase(currentPage)
+            .onSuccess {
+                _viewState.value = Success(it)
             }
             .onFailure { _viewState.value = Error(it.throwable) }
     }
