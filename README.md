@@ -15,3 +15,7 @@ Simple movie application which is listing upcoming and now playing movies.
 - IMDB redirection
 - Auto reload while scrolling
 - Load & Error handling
+
+# NOTES
+- Used API: TMDB
+- Only "US|TR|EN|CA|IT|GR|FR" region movies supported, because upcoming api is broken.
