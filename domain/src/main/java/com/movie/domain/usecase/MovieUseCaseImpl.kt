@@ -11,4 +11,10 @@ class MovieUseCaseImpl(private val movieRepository: MovieRepository) :
 
     override suspend fun getUpcomingMoviesUseCase(page: Int): Result<MovieResult> =
         movieRepository.getUpcomingMovies(page)
+
+    override suspend fun refreshNowPlayingMoviesUseCase(page: Int): Result<MovieResult> =
+        movieRepository.refreshNowPlayingMovies(page)
+
+    override suspend fun refreshUpcomingMoviesUseCase(page: Int): Result<MovieResult> =
+        movieRepository.refreshUpcomingMovies(page)
 }

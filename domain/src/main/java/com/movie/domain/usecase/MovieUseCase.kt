@@ -6,4 +6,6 @@ import com.movie.domain.model.Result
 interface MovieUseCase {
     suspend fun getNowPlayingMoviesUseCase(page: Int): Result<MovieResult>
     suspend fun getUpcomingMoviesUseCase(page: Int): Result<MovieResult>
+    suspend fun refreshNowPlayingMoviesUseCase(page: Int): Result<MovieResult>
+    suspend fun refreshUpcomingMoviesUseCase(page: Int): Result<MovieResult>
 }

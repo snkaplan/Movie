@@ -21,7 +21,7 @@ class NowPlayingViewModel(private val movieUseCase: MovieUseCase) :
 
     fun fetchMoreNowPlayingMovies() = executeUseCase {
         currentPage++
-        movieUseCase.getNowPlayingMoviesUseCase(currentPage)
+        movieUseCase.refreshNowPlayingMoviesUseCase(currentPage)
             .onSuccess {
                 _viewState.value = Success(it)
             }

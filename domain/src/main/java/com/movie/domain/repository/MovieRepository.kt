@@ -8,4 +8,6 @@ interface MovieRepository {
     val nowPlayingMovies: Result<MovieResult>
     suspend fun getNowPlayingMovies(page: Int): Result<MovieResult>
     suspend fun getUpcomingMovies(page: Int): Result<MovieResult>
+    suspend fun refreshNowPlayingMovies(page: Int): Result<MovieResult>
+    suspend fun refreshUpcomingMovies(page: Int): Result<MovieResult>
 }

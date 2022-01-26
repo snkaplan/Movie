@@ -52,4 +52,16 @@ class MovieRepositoryImpl(
             upcomingMovies
         }
     }
+
+    override suspend fun refreshNowPlayingMovies(page: Int): Result<MovieResult> {
+        return fetchData(
+            dataProvider = { movieApi.getUpcomingMovies(page).getData() }
+        )
+    }
+
+    override suspend fun refreshUpcomingMovies(page: Int): Result<MovieResult> {
+        return fetchData(
+            dataProvider = { movieApi.getUpcomingMovies(page).getData() }
+        )
+    }
 }

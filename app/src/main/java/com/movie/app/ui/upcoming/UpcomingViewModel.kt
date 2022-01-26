@@ -21,7 +21,7 @@ class UpcomingViewModel(private val movieUseCase: MovieUseCase) : BaseViewModel<
 
     fun fetchMoreUpcomingMovies() = executeUseCase {
         currentPage++
-        movieUseCase.getUpcomingMoviesUseCase(currentPage)
+        movieUseCase.refreshUpcomingMoviesUseCase(currentPage)
             .onSuccess {
                 _viewState.value = Success(it)
             }
